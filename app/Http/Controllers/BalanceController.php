@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Balance;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class BalanceController extends Controller
@@ -44,9 +45,9 @@ class BalanceController extends Controller
      * @param  \App\Models\Balance  $balance
      * @return \Illuminate\Http\Response
      */
-    public function show(Balance $balance)
+    public function show($id)
     {
-        //
+        return response()->json(Balance::find($id), 200);
     }
 
     /**

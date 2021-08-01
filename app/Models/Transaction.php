@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Transaction
- * 
+ *
  * @property int $id
  * @property int $amount
  * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property User $user
  *
  * @package App\Models
@@ -35,6 +35,11 @@ class Transaction extends Model
 		'amount',
 		'user_id'
 	];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 
 	public function user()
 	{
