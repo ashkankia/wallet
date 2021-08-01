@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\BalanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get("transactions", [TransactionController::class, 'index']);
+
+Route::post("transactions", [TransactionController::class, 'store']);
+
+Route::get("balances/{id}", [BalanceController::class, 'show']);
