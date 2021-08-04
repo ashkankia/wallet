@@ -43,11 +43,11 @@ class BalanceController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Balance  $balance
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        return response()->json(Balance::find($id), 200);
+        return response()->json(Balance::find($id));
     }
 
     /**

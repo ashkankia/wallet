@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Balance;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,17 +39,23 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $transaction = DB::transaction(function () use ($request) {
+            $user = User::find($request->user_id);
+            if (is_null($user)) {
+                return response()->json(null, 404);
+            }
             $balance = Balance::where('user_id', $request->user_id)->first();
             if (is_null($balance)) {
-                $balance = new Balance(['user_id'=> $request->user_id, 'balance'=>$request->amount]);
+                $balance = new Balance(['user_id' => $request->user_id, 'balance' => $request->amount]);
             } else {
-                $balance->balance += $request->amount;
+                if (isset($request->amount)) {
+                    $balance->balance += $request->amount;
+                }
             }
             $transaction = Transaction::create($request->all());
             $balance->save();
             return $transaction;
         });
-        return response()->json(['reference_id'=>$transaction->id], 201);
+        return response()->json(['reference_id' => $transaction->id], 201);
     }
 
     /**
